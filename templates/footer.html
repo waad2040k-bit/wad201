@@ -1,0 +1,226 @@
+<footer class="site-footer" dir="rtl">
+  <style>
+    :root{
+      --bg: #fbf3ea;
+      --text: #2a2320;
+      --muted: #6d5f58;
+      --pink: #d99aa8;
+      --stroke: #ecd9cf;
+      --shadow: 0 12px 30px rgba(42,35,32,.08);
+      --radius-lg: 24px;
+    }
+
+    .site-footer{
+      margin-top: 42px;
+      background: linear-gradient(180deg, rgba(251,243,234,.7), var(--bg));
+      border-top: 1px solid var(--stroke);
+    }
+
+    .footer-wrap{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 16px 18px;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .footer-card{
+      background: rgba(255,255,255,.65);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .footer-title{
+      font-weight: 900;
+      color: var(--text);
+      margin: 0 0 10px;
+      font-size: 14px;
+    }
+
+    .footer-text{
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.8;
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .footer-links{
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 8px;
+    }
+    .footer-links a{
+      text-decoration: none;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 13px;
+      opacity: .9;
+      transition: .2s ease;
+    }
+    .footer-links a:hover{
+      opacity: 1;
+      color: var(--pink);
+      transform: translateX(-2px);
+      display:inline-block;
+    }
+
+    .newsletter{
+      display:flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .newsletter input{
+      flex: 1;
+      padding: 12px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: #fff;
+      outline: none;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .newsletter input:focus{
+      box-shadow: 0 0 0 4px rgba(217,154,168,.18);
+      border-color: rgba(217,154,168,.65);
+    }
+    .newsletter button{
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(217,154,168,.45);
+      background: radial-gradient(circle at 30% 30%, rgba(240,183,195,.9), rgba(217,154,168,.95));
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+      transition: .2s ease;
+      white-space: nowrap;
+    }
+    .newsletter button:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+
+    .footer-bottom{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 16px 22px;
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,.7);
+    }
+
+    @media (max-width: 980px){
+      .footer-wrap{
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 560px){
+      .footer-wrap{
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <div class="footer-wrap">
+    <div class="footer-card">
+      <h3 class="footer-title">GlowCare</h3>
+      <p class="footer-text">
+        متجر عناية بالبشرة مختار بعناية — تركيبات لطيفة، نتائج ملموسة، وتجربة شراء سهلة.
+      </p>
+
+      <div class="newsletter" aria-label="النشرة البريدية">
+        <input id="nlEmail" type="email" placeholder="بريدك الإلكتروني" autocomplete="email">
+        <button id="nlBtn" type="button">اشتركي</button>
+      </div>
+      <p class="footer-text" id="nlMsg" style="margin-top:10px;"></p>
+    </div>
+
+    <div class="footer-card">
+      <h3 class="footer-title">روابط سريعة</h3>
+      <ul class="footer-links">
+        <li><a href="#">جميع المنتجات</a></li>
+        <li><a href="#">الأكثر مبيعًا</a></li>
+        <li><a href="#">العروض</a></li>
+        <li><a href="#">سياسة الاسترجاع</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-card">
+      <h3 class="footer-title">الدعم</h3>
+      <ul class="footer-links">
+        <li><a href="#">الأسئلة الشائعة</a></li>
+        <li><a href="#">طرق الدفع</a></li>
+        <li><a href="#">الشحن والتوصيل</a></li>
+        <li><a href="#">تواصل معنا</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-card">
+      <h3 class="footer-title">معلومات</h3>
+      <p class="footer-text">
+        ساعات العمل: يوميًا 10ص – 10م<br>
+        واتساب: <span dir="ltr">+966 5X XXX XXXX</span><br>
+        البريد: <span dir="ltr">support@example.com</span>
+      </p>
+      <div style="height:10px"></div>
+      <div class="pill" aria-label="تنويه">
+        <span style="width:10px;height:10px;border-radius:999px;background:var(--pink);display:inline-block"></span>
+        <span>منتجات أصلية + تغليف أنيق</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="pill">© <span id="yearNow"></span> GlowCare — جميع الحقوق محفوظة</div>
+    <div class="pill">صُمم بحب ✦ لون بيج + وردي</div>
+  </div>
+
+  <script>
+    (function(){
+      const year = document.getElementById('yearNow');
+      if(year) year.textContent = new Date().getFullYear();
+
+      const email = document.getElementById('nlEmail');
+      const btn = document.getElementById('nlBtn');
+      const msg = document.getElementById('nlMsg');
+
+      // تحقق بسيط للواجهة فقط (التحقق الحقيقي يكون في السيرفر)
+      function isValidEmail(v){
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(v || '').trim());
+      }
+
+      if(btn && email && msg){
+        btn.addEventListener('click', () => {
+          const v = email.value.trim();
+          if(!isValidEmail(v)){
+            msg.textContent = 'اكتبي بريد صحيح من فضلك.';
+            msg.style.color = '#8a3b4a';
+            return;
+          }
+          msg.textContent = 'تم! راح توصلك العروض أول بأول 💗';
+          msg.style.color = '#2a2320';
+          email.value = '';
+        });
+      }
+    })();
+  </script>
+</footer>
