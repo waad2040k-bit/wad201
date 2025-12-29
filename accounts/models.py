@@ -8,7 +8,7 @@ from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
-    """Custom user manager using email as the unique identifier."""
+    """مدير المستخدم المخصص: يعتمد البريد الإلكتروني كمعرّف وحيد."""
 
     def create_user(self, email: str, password: str | None = None, **extra_fields):
         if not email:
@@ -40,26 +40,26 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
-    Minimal but production-ready custom user.
-    - Uses email for login
-    - Supports staff/superuser
+    مستخدم مخصص (Custom User):
+    - تسجيل الدخول بالبريد الإلكتروني
+    - يدعم صلاحيات الموظفين والسوبر أدمن
     """
 
-    email = models.EmailField(unique=True, db_index=True)
-    first_name = models.CharField(max_length=60, blank=True)
-    last_name = models.CharField(max_length=60, blank=True)
+    email = models.EmailField("البريد الإلكتروني", unique=True, db_index=True)
+    first_name = models.CharField("الاسم الأول", max_length=60, blank=True)
+    last_name = models.CharField("اسم العائلة", max_length=60, blank=True)
 
     phone_regex = RegexValidator(
         regex=r"^\+?\d{7,15}$",
         message="Phone must be numeric and can start with +, length 7-15.",
     )
-    phone = models.CharField(max_length=20, blank=True, validators=[phone_regex])
+    phone = models.CharField("رقم الجوال", max_length=20, blank=True, validators=[phone_regex])
 
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField("نشط", default=True)
+    is_staff = models.BooleanField("موظف", default=False)
 
-    date_joined = models.DateTimeField(default=timezone.now)
-    last_updated = models.DateTimeField(auto_now=True)
+    date_joined = models.DateTimeField("تاريخ التسجيل", default=timezone.now)
+    last_updated = models.DateTimeField("آخر تحديث", auto_now=True)
 
     objects = UserManager()
 
@@ -67,8 +67,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS: list[str] = []
 
     class Meta:
-        verbose_name = "User"
-        verbose_name_plural = "Users"
+        verbose_name = "مستخدم"
+        verbose_name_plural = "المستخدمون"
 
     def __str__(self) -> str:
         name = (self.first_name + " " + self.last_name).strip()
@@ -76,16 +76,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class CustomerProfile(models.Model):
-    """
-    Optional extra info for customers.
-    Keep it lightweight; you can extend later.
-    """
-    user = models.OneToOneField("accounts.User", on_delete=models.CASCADE, related_name="profile")
-    marketing_opt_in = models.BooleanField(default=False)
-    notes = models.TextField(blank=True)
+    """بيانات إضافية للعميل (اختياري)."""
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    user = models.OneToOneField("accounts.User", on_delete=models.CASCADE, related_name="profile", verbose_name="المستخدم")
+    marketing_opt_in = models.BooleanField("الموافقة على رسائل التسويق", default=False)
+    notes = models.TextField("ملاحظات", blank=True)
+
+    created_at = models.DateTimeField("تاريخ الإنشاء", auto_now_add=True)
+    updated_at = models.DateTimeField("آخر تحديث", auto_now=True)
+
+    class Meta:
+        verbose_name = "ملف عميل"
+        verbose_name_plural = "ملفات العملاء"
 
     def __str__(self) -> str:
         return f"Profile({self.user_id})"
@@ -93,28 +95,30 @@ class CustomerProfile(models.Model):
 
 class Address(models.Model):
     class AddressType(models.TextChoices):
-        SHIPPING = "shipping", "Shipping"
-        BILLING = "billing", "Billing"
+        SHIPPING = "shipping", "عنوان شحن"
+        BILLING = "billing", "عنوان فواتير"
 
-    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="addresses")
-    address_type = models.CharField(max_length=10, choices=AddressType.choices, default=AddressType.SHIPPING)
+    user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="addresses", verbose_name="المستخدم")
+    address_type = models.CharField("نوع العنوان", max_length=10, choices=AddressType.choices, default=AddressType.SHIPPING)
 
-    full_name = models.CharField(max_length=120)
-    phone = models.CharField(max_length=20, blank=True)
+    full_name = models.CharField("الاسم الكامل", max_length=120)
+    phone = models.CharField("رقم الجوال", max_length=20, blank=True)
 
-    country = models.CharField(max_length=60, default="Saudi Arabia")
-    city = models.CharField(max_length=60)
-    district = models.CharField(max_length=80, blank=True)
-    street = models.CharField(max_length=120)
-    building = models.CharField(max_length=40, blank=True)
-    postal_code = models.CharField(max_length=20, blank=True)
+    country = models.CharField("الدولة", max_length=60, default="Saudi Arabia")
+    city = models.CharField("المدينة", max_length=60)
+    district = models.CharField("الحي", max_length=80, blank=True)
+    street = models.CharField("الشارع", max_length=120)
+    building = models.CharField("رقم المبنى/الوحدة", max_length=40, blank=True)
+    postal_code = models.CharField("الرمز البريدي", max_length=20, blank=True)
 
-    is_default = models.BooleanField(default=False)
+    is_default = models.BooleanField("افتراضي", default=False)
 
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField("تاريخ الإنشاء", auto_now_add=True)
+    updated_at = models.DateTimeField("آخر تحديث", auto_now=True)
 
     class Meta:
+        verbose_name = "عنوان"
+        verbose_name_plural = "العناوين"
         indexes = [
             models.Index(fields=["user", "address_type"]),
         ]
